@@ -18,7 +18,9 @@ const Kakao: NextPage = () => {
       ).then((res) => res.json());
 
       if (response.code === 200) {
-        const { access_token, refresh_token, user } = response.data;
+        const { access_token, refresh_token, kakao_access_token, user } =
+          response.data;
+        window.Kakao.Auth.setAccessToken(kakao_access_token);
 
         /* 
           이 부분에서 access_token / refresh_token 을
