@@ -14,8 +14,11 @@ const Kakao: NextPage = () => {
   const loginHandler = useCallback(
     async (code: string | string[]) => {
       const response: any = await fetch(
-        `http://localhost:8000/api/user/kakao/callback/?code=${code}`
+        `https://kyungdongdev.kro.kr/api/user/kakao/callback/?code=${code}`
+        // `http://localhost:8000/api/user/kakao/callback/?code=${code}`
       ).then((res) => res.json());
+
+      console.log("RESPONSE:", response);
 
       if (response.code === 200) {
         const { access_token, refresh_token, kakao_access_token, user } =
