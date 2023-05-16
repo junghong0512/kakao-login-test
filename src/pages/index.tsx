@@ -10,19 +10,6 @@ export default function Home() {
     });
   };
 
-  const initNaverLogin = () => {
-    const naverLogin = new window.naver.LoginWithNaverId({
-      clientId: process.env.NEXT_PUBLIC_SOCIAL_AUTH_NAVER_CLIENT_ID,
-      // callbackUrl: `localhost:3000/siginin/naver/login?naver=true`,
-      callbackUrl: `http://localhost:3000/signin/naver`,
-      isPopup: false,
-      loginButton: { color: "green", type: 1, height: 60 },
-      callbackHandle: true,
-    });
-
-    naverLogin.init();
-  };
-
   const getData = () => {
     if (window.location.href.includes("access_token")) {
       console.log("We got AccessToken");
@@ -34,18 +21,7 @@ export default function Home() {
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY); // 발급받은 키 중 javascript키를 사용해준다.
     }
-
-    /* 네이버 */
-    initNaverLogin();
-    getData();
   }, []);
-
-  const handleNaverClick = () => {
-    const naverLoginButton = document.getElementById(
-      "naverIdLogin_loginButton"
-    );
-    if (naverLoginButton) naverLoginButton.click();
-  };
 
   useEffect(() => {
     console.log(window?.Kakao?.Auth?.getAccessToken());
@@ -79,6 +55,10 @@ export default function Home() {
     // await fetch("http://localhost:8000/api/user/naver/login");
   };
 
+  const onClickGoogleLogin = async () => {
+    router.push("http://localhost:8000/api/user/google/login");
+  };
+
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center gap-7">
       {/* KAKAO LOGIN */}
@@ -99,14 +79,17 @@ export default function Home() {
       </div>
 
       {/* NAVER LOGIN */}
-      <div>
-        {/* <div id="naverIdLogin" style={{ display: "none" }} /> */}
+      {/* <div> 
         <div onClick={handleNaverClick}>네이버 로그인</div>
         <div id="naverIdLogin" style={{ display: "none" }} />
-      </div>
+      </div> */}
 
       <div>
         <button onClick={onClickNaverLogin}>네이버 로그인</button>
+      </div>
+
+      <div>
+        <button onClick={onClickGoogleLogin}>구글 로그인</button>
       </div>
     </div>
   );
